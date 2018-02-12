@@ -24,8 +24,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+//      Functions of various buttons
         startButton.setOnClickListener {
-            if (timeValue==0){
+//          Run it only when the clock is not moving
+            if (!handler.hasMessages(0)){
                 handler.post(runnable)
             }
         }
@@ -43,15 +45,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun timeToText(time: Int = 0):String? {
-        return if (time < 0) {
-            null
-        }else if (time == 0) {
-            "00:00:00"
-        }else {
-            val h = time / 3600
-            val m = time % 3600 / 60
-            val s = time % 60
-            "%1$02d:%2$02d:%3$02d".format(h, m , s)
+//      use when grammar
+        return when {
+            time < 0 -> null
+            time == 0 -> "00:00:00"
+            else -> {
+                val h = time / 3600
+                val m = time % 3600 / 60
+                val s = time % 60
+                "%1$02d:%2$02d:%3$02d".format(h, m , s)
+            }
         }
     }
 }
